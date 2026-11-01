@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar.tsx';
 import { Hero } from './components/Hero.tsx';
 import { About } from './components/About.tsx';
@@ -15,6 +15,29 @@ import { FloatingWhatsApp } from './components/FloatingWhatsApp.tsx';
 
 export default function App() {
   const [selectedServicePreset, setSelectedServicePreset] = useState<string>('Branding');
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('app_theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    return 'light';
+  });
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      localStorage.setItem('app_theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('app_theme', 'light');
+    }
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -29,9 +52,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#151515] flex flex-col font-sans selection:bg-[#1119A8] selection:text-white">
-      {/* Top Navigation */}
-      <Navbar onNavigateToContact={() => scrollToSection('contact')} />
+    <div className="min-h-screen bg-white dark:bg-[#040620] text-[#151515] dark:text-[#F8FAFC] flex flex-col font-sans selection:bg-[#1119A8] selection:text-white transition-colors duration-300">
+      {/* Top Navigation with Theme Toggle */}
+      <Navbar
+        onNavigateToContact={() => scrollToSection('contact')}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       {/* Main Content Sections */}
       <main className="flex-grow">

@@ -10,6 +10,7 @@ import {
   Sparkles,
   ExternalLink,
 } from 'lucide-react';
+import { motion } from 'motion/react';
 import { BRAND_CONFIG, getWhatsAppUrl } from '../config/brandConfig.ts';
 import { SERVICES_LIST } from '../data/servicesData.ts';
 
@@ -64,7 +65,6 @@ export const Contact: React.FC<ContactProps> = ({
   // Keep service dropdown in sync if user clicked "Request This Service" from Services/Portfolio
   useEffect(() => {
     if (selectedServicePreset) {
-      // Find matching service name
       const matched = SERVICES_LIST.find(
         (s) =>
           s.title.toLowerCase().includes(selectedServicePreset.toLowerCase()) ||
@@ -112,7 +112,6 @@ export const Contact: React.FC<ContactProps> = ({
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error on change
     if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -154,7 +153,7 @@ export const Contact: React.FC<ContactProps> = ({
         setSubmitResult({
           status: 'success',
           message:
-            'Thank you! Your enquiry has been delivered directly to our inbox via Formspree. We will review your project and get back to you promptly.',
+            'Thank you! Your enquiry has been delivered directly to our studio inbox via Formspree. We will review your project and get back to you promptly.',
         });
         // Reset form
         setFormData({
@@ -199,7 +198,6 @@ export const Contact: React.FC<ContactProps> = ({
     }
   };
 
-  // Build live WhatsApp link from current form fields for manual 1-click send
   const liveWhatsAppUrl = getWhatsAppUrl(
     formData.service,
     formData.message
@@ -208,37 +206,49 @@ export const Contact: React.FC<ContactProps> = ({
   );
 
   return (
-    <section id="contact" className="py-20 bg-[#F7F7FA] border-t border-slate-200/80">
+    <section id="contact" className="py-16 sm:py-20 bg-[#F7F7FA] dark:bg-[#070A2D] border-t border-slate-200/80 dark:border-white/10 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Heading */}
-        <div className="max-w-3xl mb-12">
-          <div className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-[#1119A8] mb-2">
-            <span className="w-2.5 h-0.5 bg-[#1119A8]" />
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mb-10 sm:mb-12"
+        >
+          <div className="flex items-center gap-2 text-xs sm:text-sm font-bold tracking-wide uppercase text-[#1119A8] dark:text-blue-400 mb-2">
+            <span className="w-2.5 h-0.5 bg-[#1119A8] dark:bg-blue-400" />
             <span>Get a Quote / Contact</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#080B63] font-display tracking-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#080B63] dark:text-white font-display tracking-tight">
             Let's Bring Your Creative Vision to Life
           </h2>
-          <p className="mt-3 text-base text-slate-600 leading-relaxed">
+          <p className="mt-2.5 sm:mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed">
             Fill in the details below to request a service quotation or send an enquiry directly to our studio.
             We typically respond within a few hours.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-start">
           {/* Contact Form Column (Left/Main) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-9 border border-slate-200 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-7 bg-white dark:bg-[#0B0F3E] rounded-2xl p-5 sm:p-8 md:p-9 border border-slate-200 dark:border-white/10 shadow-sm"
+          >
             <form
               action={BRAND_CONFIG.formspreeEndpoint}
               method="POST"
               onSubmit={handleSubmit}
               noValidate
-              className="space-y-5"
+              className="space-y-4 sm:space-y-5"
             >
               {/* Row 1: Full Name & Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label htmlFor="fullName" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                  <label htmlFor="fullName" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                     Full Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -248,8 +258,10 @@ export const Contact: React.FC<ContactProps> = ({
                     value={formData.fullName}
                     onChange={handleChange}
                     placeholder="e.g. Kwame Mensah"
-                    className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all ${
-                      errors.fullName ? 'border-red-400 bg-red-50/30' : 'border-slate-300 bg-white hover:border-slate-400'
+                    className={`min-h-[44px] w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all ${
+                      errors.fullName
+                        ? 'border-red-400 bg-red-50/30 dark:bg-red-950/20'
+                        : 'border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] hover:border-slate-400 dark:hover:border-white/25'
                     }`}
                   />
                   {errors.fullName && (
@@ -260,7 +272,7 @@ export const Contact: React.FC<ContactProps> = ({
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                  <label htmlFor="email" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                     Email Address <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -269,9 +281,11 @@ export const Contact: React.FC<ContactProps> = ({
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="e.g. kwame@example.com"
-                    className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all ${
-                      errors.email ? 'border-red-400 bg-red-50/30' : 'border-slate-300 bg-white hover:border-slate-400'
+                    placeholder="e.g. client@example.com"
+                    className={`min-h-[44px] w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all ${
+                      errors.email
+                        ? 'border-red-400 bg-red-50/30 dark:bg-red-950/20'
+                        : 'border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] hover:border-slate-400 dark:hover:border-white/25'
                     }`}
                   />
                   {errors.email && (
@@ -283,9 +297,9 @@ export const Contact: React.FC<ContactProps> = ({
               </div>
 
               {/* Row 2: Phone Number & Service Required */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label htmlFor="phone" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                  <label htmlFor="phone" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                     Phone Number <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -295,8 +309,10 @@ export const Contact: React.FC<ContactProps> = ({
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder="e.g. +233 599 086 738"
-                    className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all ${
-                      errors.phone ? 'border-red-400 bg-red-50/30' : 'border-slate-300 bg-white hover:border-slate-400'
+                    className={`min-h-[44px] w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all ${
+                      errors.phone
+                        ? 'border-red-400 bg-red-50/30 dark:bg-red-950/20'
+                        : 'border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] hover:border-slate-400 dark:hover:border-white/25'
                     }`}
                   />
                   {errors.phone && (
@@ -307,7 +323,7 @@ export const Contact: React.FC<ContactProps> = ({
                 </div>
 
                 <div>
-                  <label htmlFor="service" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                  <label htmlFor="service" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                     Service Required <span className="text-red-500">*</span>
                   </label>
                   <select
@@ -315,10 +331,10 @@ export const Contact: React.FC<ContactProps> = ({
                     name="service"
                     value={formData.service}
                     onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all hover:border-slate-400"
+                    className="min-h-[44px] w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all hover:border-slate-400 dark:hover:border-white/25"
                   >
                     {SERVICES_LIST.map((s) => (
-                      <option key={s.id} value={s.title}>
+                      <option key={s.id} value={s.title} className="bg-white dark:bg-[#070A2D] text-slate-900 dark:text-white">
                         {s.title}
                       </option>
                     ))}
@@ -326,30 +342,30 @@ export const Contact: React.FC<ContactProps> = ({
                 </div>
               </div>
 
-              {/* Row 3: Budget Range (Optional) & Preferred Contact Method */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {/* Row 3: Budget Range & Preferred Contact Method */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
                 <div>
-                  <label htmlFor="budget" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
-                    Budget Range <span className="text-slate-400 font-normal lowercase">(optional)</span>
+                  <label htmlFor="budget" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
+                    Budget Range <span className="text-slate-400 dark:text-slate-500 font-normal lowercase">(optional)</span>
                   </label>
                   <select
                     id="budget"
                     name="budget"
                     value={formData.budget}
                     onChange={handleChange}
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 bg-white text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all hover:border-slate-400"
+                    className="min-h-[44px] w-full px-3.5 py-2.5 rounded-lg border border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all hover:border-slate-400 dark:hover:border-white/25"
                   >
-                    <option value="">Select an estimated budget</option>
-                    <option value="Under $100 / GHS 1,500">Under $100 / GHS 1,500</option>
-                    <option value="$100 - $250 / GHS 1,500 - 3,500">$100 - $250 / GHS 1,500 - 3,500</option>
-                    <option value="$250 - $500 / GHS 3,500 - 7,000">$250 - $500 / GHS 3,500 - 7,000</option>
-                    <option value="$500+ / GHS 7,000+">$500+ / GHS 7,000+</option>
-                    <option value="Flexible / To be discussed">Flexible / To be discussed</option>
+                    <option value="" className="bg-white dark:bg-[#070A2D]">Select an estimated budget</option>
+                    <option value="Under $100 / GHS 1,500" className="bg-white dark:bg-[#070A2D]">Under $100 / GHS 1,500</option>
+                    <option value="$100 - $250 / GHS 1,500 - 3,500" className="bg-white dark:bg-[#070A2D]">$100 - $250 / GHS 1,500 - 3,500</option>
+                    <option value="$250 - $500 / GHS 3,500 - 7,000" className="bg-white dark:bg-[#070A2D]">$250 - $500 / GHS 3,500 - 7,000</option>
+                    <option value="$500+ / GHS 7,000+" className="bg-white dark:bg-[#070A2D]">$500+ / GHS 7,000+</option>
+                    <option value="Flexible / To be discussed" className="bg-white dark:bg-[#070A2D]">Flexible / To be discussed</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                  <label className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                     Preferred Contact Method
                   </label>
                   <div className="grid grid-cols-3 gap-2">
@@ -358,10 +374,10 @@ export const Contact: React.FC<ContactProps> = ({
                         type="button"
                         key={method}
                         onClick={() => setFormData((prev) => ({ ...prev, preferredContact: method }))}
-                        className={`py-2 px-2 text-xs font-bold rounded-lg border text-center transition-all cursor-pointer ${
+                        className={`min-h-[44px] py-2 px-1 text-xs font-bold rounded-lg border text-center transition-all cursor-pointer ${
                           formData.preferredContact === method
-                            ? 'bg-[#080B63] text-white border-[#080B63] shadow-xs'
-                            : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                            ? 'bg-[#080B63] dark:bg-[#1119A8] text-white border-[#080B63] dark:border-[#1119A8] shadow-xs'
+                            : 'bg-slate-50 dark:bg-white/5 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10'
                         }`}
                       >
                         {method}
@@ -373,7 +389,7 @@ export const Contact: React.FC<ContactProps> = ({
 
               {/* Row 4: Project Description / Message */}
               <div>
-                <label htmlFor="message" className="block text-xs font-bold text-slate-800 uppercase tracking-wide mb-1.5">
+                <label htmlFor="message" className="block text-xs font-bold text-slate-800 dark:text-slate-200 uppercase tracking-wide mb-1.5">
                   Project Description / Message <span className="text-red-500">*</span>
                 </label>
                 <textarea
@@ -383,8 +399,10 @@ export const Contact: React.FC<ContactProps> = ({
                   value={formData.message}
                   onChange={handleChange}
                   placeholder="Describe your design project, brand goals, target audience, dimensions, or deadlines..."
-                  className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#1119A8] transition-all resize-y ${
-                    errors.message ? 'border-red-400 bg-red-50/30' : 'border-slate-300 bg-white hover:border-slate-400'
+                  className={`w-full px-3.5 py-2.5 rounded-lg border text-sm text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#1119A8] dark:focus:ring-blue-400 transition-all resize-y ${
+                    errors.message
+                      ? 'border-red-400 bg-red-50/30 dark:bg-red-950/20'
+                      : 'border-slate-300 dark:border-white/15 bg-white dark:bg-[#070A2D] hover:border-slate-400 dark:hover:border-white/25'
                   }`}
                 />
                 {errors.message && (
@@ -396,21 +414,21 @@ export const Contact: React.FC<ContactProps> = ({
 
               {/* Status & Feedback Banners */}
               {submitResult.status === 'success' && (
-                <div className="p-4 bg-emerald-50 border border-emerald-300 rounded-xl space-y-2.5 text-emerald-900">
+                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/60 rounded-xl space-y-2.5 text-emerald-900 dark:text-emerald-200">
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm font-bold">Enquiry Sent Successfully!</p>
-                      <p className="text-xs text-emerald-800 mt-0.5">{submitResult.message}</p>
+                      <p className="text-xs text-emerald-800 dark:text-emerald-300 mt-0.5">{submitResult.message}</p>
                     </div>
                   </div>
-                  <div className="pt-2 border-t border-emerald-200 flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <span className="text-emerald-800 font-medium">Delivered directly to the designer's inbox via Formspree</span>
+                  <div className="pt-2 border-t border-emerald-200 dark:border-emerald-800/60 flex flex-wrap items-center justify-between gap-2 text-xs">
+                    <span className="text-emerald-800 dark:text-emerald-300 font-medium">Delivered directly to studio inbox via Formspree</span>
                     <a
                       href={getWhatsAppUrl(formData.service, 'Hi, I just submitted an enquiry through your website form and wanted to touch base!')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-bold text-emerald-800 hover:text-emerald-900 flex items-center gap-1 underline"
+                      className="font-bold text-emerald-800 dark:text-emerald-300 hover:text-emerald-900 dark:hover:text-emerald-100 flex items-center gap-1 underline"
                     >
                       <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
                       <span>Also notify on WhatsApp</span>
@@ -419,53 +437,13 @@ export const Contact: React.FC<ContactProps> = ({
                 </div>
               )}
 
-              {submitResult.status === 'config_notice' && (
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl space-y-3">
-                  <div className="flex items-start gap-2.5">
-                    <Sparkles className="w-5 h-5 text-[#1119A8] shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-xs font-bold text-[#080B63] uppercase tracking-wide">
-                        Direct Delivery Notification
-                      </p>
-                      <p className="text-xs text-slate-700 mt-1 leading-relaxed">
-                        {submitResult.message}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Immediate 1-Click WhatsApp Forwarding */}
-                  <div className="pt-2 flex flex-wrap items-center gap-2">
-                    {submitResult.whatsappUrl && (
-                      <a
-                        href={submitResult.whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="py-2.5 px-4 bg-[#25D366] hover:bg-[#20ba59] active:scale-95 text-white font-bold text-xs rounded-lg inline-flex items-center gap-2 shadow-xs transition-transform"
-                      >
-                        <MessageCircle className="w-4 h-4 fill-white" />
-                        <span>Send This Enquiry via WhatsApp Now</span>
-                      </a>
-                    )}
-                    {submitResult.mailtoUrl && (
-                      <a
-                        href={submitResult.mailtoUrl}
-                        className="py-2.5 px-3.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-800 font-semibold text-xs rounded-lg inline-flex items-center gap-1.5 transition-colors"
-                      >
-                        <Mail className="w-3.5 h-3.5 text-[#1119A8]" />
-                        <span>Open in Email App</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              )}
-
               {submitResult.status === 'error' && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-xl space-y-2">
-                  <div className="flex items-start gap-2 text-red-800">
-                    <AlertCircle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
+                <div className="p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 rounded-xl space-y-2">
+                  <div className="flex items-start gap-2 text-red-800 dark:text-red-300">
+                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-xs font-bold">Submission Notice</p>
-                      <p className="text-xs text-red-700 mt-0.5">{submitResult.message}</p>
+                      <p className="text-xs text-red-700 dark:text-red-300 mt-0.5">{submitResult.message}</p>
                     </div>
                   </div>
                   {submitResult.whatsappUrl && (
@@ -473,7 +451,7 @@ export const Contact: React.FC<ContactProps> = ({
                       href={submitResult.whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 underline mt-1"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 dark:text-emerald-400 hover:underline mt-1"
                     >
                       <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
                       <span>Forward to WhatsApp instead</span>
@@ -487,7 +465,7 @@ export const Contact: React.FC<ContactProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex-1 py-3.5 px-6 bg-[#080B63] hover:bg-[#1119A8] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="min-h-[46px] flex-1 py-3 px-6 bg-[#080B63] dark:bg-[#1119A8] hover:bg-[#1119A8] dark:hover:bg-[#2E3AFF] active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold text-sm rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
@@ -506,88 +484,100 @@ export const Contact: React.FC<ContactProps> = ({
                   href={liveWhatsAppUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-3.5 px-5 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-900 active:scale-95 font-bold text-xs sm:text-sm rounded-xl transition-all inline-flex items-center justify-center gap-2 shadow-xs"
+                  className="min-h-[46px] py-3 px-5 bg-emerald-50 dark:bg-emerald-950/40 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 border border-emerald-300 dark:border-emerald-700/60 text-emerald-900 dark:text-emerald-200 active:scale-95 font-bold text-xs sm:text-sm rounded-xl transition-all inline-flex items-center justify-center gap-2 shadow-xs"
                 >
                   <MessageCircle className="w-4 h-4 text-[#25D366] fill-[#25D366]" />
                   <span>Chat on WhatsApp</span>
                 </a>
               </div>
             </form>
-          </div>
+          </motion.div>
 
           {/* Business Contact Cards (Right Column) */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-5 sm:space-y-6">
             {/* Primary Contact Card */}
-            <div className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200 shadow-xs">
-              <h3 className="text-lg font-bold text-[#080B63] mb-4 font-display">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="bg-white dark:bg-[#0B0F3E] rounded-2xl p-5 sm:p-7 border border-slate-200 dark:border-white/10 shadow-xs"
+            >
+              <h3 className="text-base sm:text-lg font-bold text-[#080B63] dark:text-white mb-4 font-display">
                 Direct Contact & Support
               </h3>
 
-              <div className="space-y-4 text-sm">
+              <div className="space-y-3.5 sm:space-y-4 text-sm">
                 {/* WhatsApp */}
-                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80">
+                <div className="flex items-start gap-3.5 p-3 sm:p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200/80 dark:border-emerald-800/40">
                   <div className="w-9 h-9 rounded-lg bg-[#25D366] text-white flex items-center justify-center shrink-0">
                     <MessageCircle className="w-5 h-5 fill-white" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-xs font-bold uppercase tracking-wider text-emerald-800">WhatsApp (Recommended)</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">WhatsApp (Recommended)</p>
                     <a
                       href={getWhatsAppUrl()}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-base font-extrabold text-[#080B63] hover:text-[#1119A8] flex items-center gap-1 mt-0.5"
+                      className="text-sm sm:text-base font-extrabold text-[#080B63] dark:text-white hover:text-[#1119A8] dark:hover:text-blue-300 flex items-center gap-1 mt-0.5"
                     >
                       <span>{BRAND_CONFIG.phoneDisplay}</span>
                       <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                     </a>
-                    <p className="text-xs text-slate-600 mt-1">Direct instant chat for quick quotes and questions.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Direct instant chat for quick quotes and briefs.</p>
                   </div>
                 </div>
 
                 {/* Phone Call */}
-                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="w-9 h-9 rounded-lg bg-[#080B63] text-white flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-3.5 p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+                  <div className="w-9 h-9 rounded-lg bg-[#080B63] dark:bg-[#1119A8] text-white flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Direct Phone Line</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Direct Phone Line</p>
                     <a
                       href={`tel:${BRAND_CONFIG.phoneRaw}`}
-                      className="text-base font-bold text-[#080B63] hover:text-[#1119A8] block mt-0.5"
+                      className="text-sm sm:text-base font-bold text-[#080B63] dark:text-white hover:text-[#1119A8] dark:hover:text-blue-300 block mt-0.5"
                     >
                       {BRAND_CONFIG.phoneDisplay}
                     </a>
-                    <p className="text-xs text-slate-600 mt-1">Available for voice consultations and briefs.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Available for voice consultations and briefs.</p>
                   </div>
                 </div>
 
-                {/* Email Address */}
-                <div className="flex items-start gap-3.5 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                  <div className="w-9 h-9 rounded-lg bg-[#1119A8] text-white flex items-center justify-center shrink-0">
+                {/* Mock Studio Email */}
+                <div className="flex items-start gap-3.5 p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10">
+                  <div className="w-9 h-9 rounded-lg bg-[#1119A8] dark:bg-[#2E3AFF] text-white flex items-center justify-center shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Direct Email</p>
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Studio Inquiries</p>
                     <a
                       href={`mailto:${BRAND_CONFIG.ownerEmail}`}
-                      className="text-sm font-bold text-[#080B63] hover:text-[#1119A8] block mt-0.5 break-all"
+                      className="text-xs sm:text-sm font-bold text-[#080B63] dark:text-white hover:text-[#1119A8] dark:hover:text-blue-300 block mt-0.5 break-all"
                     >
                       {BRAND_CONFIG.ownerEmail}
                     </a>
-                    <p className="text-xs text-slate-600 mt-1">For comprehensive creative briefs and file transfers.</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">Official studio desk for contracts and asset transfers.</p>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Studio Hours & Response Time */}
-            <div className="bg-[#080B63] text-white rounded-2xl p-6 sm:p-7 shadow-md">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="bg-[#080B63] dark:bg-[#070A38] text-white rounded-2xl p-5 sm:p-7 shadow-md border dark:border-white/10"
+            >
               <div className="flex items-center gap-2 text-xs uppercase tracking-wider font-bold text-blue-200 mb-2">
                 <Clock className="w-4 h-4 text-amber-300" />
                 <span>Working Hours & Availability</span>
               </div>
-              <h4 className="text-lg font-bold font-display">Prompt Project Turnaround</h4>
-              <p className="text-xs text-blue-100 mt-1 mb-4 leading-relaxed">
+              <h4 className="text-base sm:text-lg font-bold font-display">Prompt Project Turnaround</h4>
+              <p className="text-xs text-blue-100 dark:text-slate-300 mt-1 mb-4 leading-relaxed">
                 We respect your deadlines and provide prompt updates throughout the design process.
               </p>
 
@@ -605,7 +595,7 @@ export const Contact: React.FC<ContactProps> = ({
                   <span className="font-bold text-amber-300">By Special Request</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

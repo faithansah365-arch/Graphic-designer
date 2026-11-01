@@ -13,10 +13,10 @@ export const BRAND_CONFIG = {
   phoneRaw: "+233599086738",
   whatsappNumber: "+233599086738",
   whatsappUrlBase: "https://wa.me/233599086738",
-  ownerEmail: "faithansah365@gmail.com",
+  ownerEmail: "contact@graphicdesignerstudio.com",
   formspreeEndpoint: "https://formspree.io/f/mjyyaqjw",
   heroImageUrl: "https://i.imgur.com/McYYkFC.jpg",
-  heroImagePostUrl: "https://imgur.com/McYYkFC",
+  brandPictureUrl: "https://i.imgur.com/BDBk2hl.jpg",
   
   // Headings & Brand Statements
   mainHeadline: "Do You Need a Professional Graphic Designer?",

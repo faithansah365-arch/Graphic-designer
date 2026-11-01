@@ -40,22 +40,30 @@ export const Footer: React.FC<FooterProps> = ({ onSelectService }) => {
   };
 
   return (
-    <footer className="bg-[#080B63] text-white border-t border-[#1119A8]/40 pt-16 pb-12">
+    <footer className="bg-[#080B63] dark:bg-[#03051A] text-white border-t border-[#1119A8]/40 dark:border-white/10 pt-14 sm:pt-16 pb-10 sm:pb-12 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-white/10">
           {/* Column 1: Brand & Description (5 cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <div className="lg:col-span-5 space-y-3.5 sm:space-y-4">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-[#1119A8] text-white font-extrabold flex items-center justify-center text-lg shadow-sm">
-                G
+              <div className="w-10 h-10 rounded-lg overflow-hidden bg-[#1119A8] text-white font-extrabold flex items-center justify-center text-lg shadow-sm border border-white/20 shrink-0">
+                <img
+                  src={BRAND_CONFIG.brandPictureUrl}
+                  alt={BRAND_CONFIG.businessName}
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                  }}
+                />
               </div>
               <span className="text-xl font-extrabold font-display tracking-tight text-white">
                 {BRAND_CONFIG.businessName}
               </span>
             </div>
 
-            <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
+            <p className="text-xs sm:text-sm text-slate-300 dark:text-slate-400 leading-relaxed max-w-sm">
               {BRAND_CONFIG.businessDescription}
             </p>
 
@@ -94,7 +102,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectService }) => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-blue-200">
               Quick Navigation
             </h4>
-            <ul className="space-y-2 text-sm text-slate-300">
+            <ul className="space-y-2 text-sm text-slate-300 dark:text-slate-400">
               <li>
                 <a href="#home" className="hover:text-white hover:underline transition-colors">
                   Home
@@ -128,7 +136,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectService }) => {
             <h4 className="text-xs font-bold uppercase tracking-wider text-blue-200">
               Our Services
             </h4>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-xs text-slate-300">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-xs text-slate-300 dark:text-slate-400">
               {SERVICES_LIST.map((service) => (
                 <li key={service.id}>
                   <button
@@ -148,7 +156,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectService }) => {
         </div>
 
         {/* Bottom Bar: Social Links & Copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           {/* Social Links */}
           <div className="flex items-center gap-3">
             <span className="text-slate-400 font-semibold mr-1">Follow:</span>

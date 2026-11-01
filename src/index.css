@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --font-sans: 'Poppins', 'Manrope', system-ui, -apple-system, sans-serif;
@@ -14,6 +15,13 @@
   font-family: var(--font-sans);
   color: var(--color-brand-text);
   background-color: #FFFFFF;
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  background-color: #040620;
+  color: #F8FAFC;
 }
 
 html {
@@ -27,10 +35,16 @@ html {
 ::-webkit-scrollbar-track {
   background: #f1f1f5;
 }
+html.dark ::-webkit-scrollbar-track {
+  background: #080B2E;
+}
 ::-webkit-scrollbar-thumb {
   background: #1119A8;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #080B63;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2E3AFF;
 }

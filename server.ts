@@ -33,7 +33,7 @@ app.post('/api/contact', async (req, res) => {
 
     const preferredMethod = contactMethod || 'WhatsApp';
     const budgetRange = budget || 'Not specified';
-    const recipientEmail = process.env.OWNER_EMAIL || 'faithansah365@gmail.com';
+    const recipientEmail = process.env.OWNER_EMAIL || 'contact@graphicdesignerstudio.com';
     const resendApiKey = process.env.RESEND_API_KEY;
 
     // Build WhatsApp fallback URL
