@@ -15,8 +15,8 @@ export const BRAND_CONFIG = {
   whatsappUrlBase: "https://wa.me/233599086738",
   ownerEmail: "faithansah365@gmail.com",
   formspreeEndpoint: "https://formspree.io/f/mjyyaqjw",
-  heroImageUrl: "https://i.imgur.com/Ar242lK.png",
-  heroImageAlbumUrl: "https://imgur.com/a/Ar242lK",
+  heroImageUrl: "https://i.imgur.com/McYYkFC.jpg",
+  heroImagePostUrl: "https://imgur.com/McYYkFC",
   
   // Headings & Brand Statements
   mainHeadline: "Do You Need a Professional Graphic Designer?",

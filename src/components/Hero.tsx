@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onViewServices }) => {
   const [heroImage, setHeroImage] = useState<string>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('custom_hero_image');
-      if (saved) return saved;
+      if (saved && saved.startsWith('data:image/')) return saved;
     }
     return BRAND_CONFIG.heroImageUrl;
   });
@@ -33,6 +33,13 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onViewServices }) => {
   const [customUrlInput, setCustomUrlInput] = useState('');
   const [imgLoadError, setImgLoadError] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    const saved = typeof window !== 'undefined' ? localStorage.getItem('custom_hero_image') : null;
+    if (!saved || !saved.startsWith('data:image/')) {
+      setHeroImage(BRAND_CONFIG.heroImageUrl);
+    }
+  }, []);
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -209,10 +216,10 @@ export const Hero: React.FC<HeroProps> = ({ onGetStarted, onViewServices }) => {
                       <span>Imgur blocked external hotlinking. Click "Change Flyer" to upload directly.</span>
                     </span>
                     <button
-                      onClick={() => setShowUploaderModal(true)}
+                      onClick={() => fileInputRef.current?.click()}
                       className="underline font-bold whitespace-nowrap cursor-pointer hover:text-white"
                     >
-                      Upload File
+                      Upload File Now
                     </button>
                   </div>
                 )}
