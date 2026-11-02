@@ -4,8 +4,8 @@
  */
 
 export const BRAND_CONFIG = {
-  // Replace with official brand name when available (e.g., "Apex Visual Studio", "Aurelian Design Co.")
-  businessName: "Graphic Designer",
+  // Official brand name
+  businessName: "Kein Graphics",
   subtitle: "Creative Design & Branding Studio",
   
   // Contact details
@@ -13,10 +13,11 @@ export const BRAND_CONFIG = {
   phoneRaw: "+233599086738",
   whatsappNumber: "+233599086738",
   whatsappUrlBase: "https://wa.me/233599086738",
-  ownerEmail: "contact@graphicdesignerstudio.com",
-  formspreeEndpoint: "https://formspree.io/f/mjyyaqjw",
+  ownerEmail: "contact@keingraphics.com",
+  formspreeEndpoint: "https://formspree.io/f/xvkkwewd",
   heroImageUrl: "https://i.imgur.com/McYYkFC.jpg",
   brandPictureUrl: "https://i.imgur.com/BDBk2hl.jpg",
+  portfolioDriveUrl: "https://drive.google.com/drive/folders/1sxn1imJpfh_VNidY8ymr-YnrZ7nFi0cz?usp=sharing",
   
   // Headings & Brand Statements
   mainHeadline: "Do You Need a Professional Graphic Designer?",
@@ -37,11 +38,11 @@ export const BRAND_CONFIG = {
   
   // Editable social media profile URLs
   socialLinks: [
-    { name: "Instagram", url: "https://instagram.com/graphicdesigner", handle: "@graphicdesigner" },
-    { name: "Behance", url: "https://behance.net/graphicdesigner", handle: "behance.net/graphicdesigner" },
-    { name: "LinkedIn", url: "https://linkedin.com/in/graphicdesigner", handle: "LinkedIn Profile" },
-    { name: "X (Twitter)", url: "https://x.com/graphicdesigner", handle: "@graphicdesigner" },
-    { name: "Facebook", url: "https://facebook.com/graphicdesigner", handle: "Facebook Page" },
+    { name: "Instagram", url: "https://instagram.com/keingraphics", handle: "@keingraphics" },
+    { name: "Behance", url: "https://behance.net/keingraphics", handle: "behance.net/keingraphics" },
+    { name: "LinkedIn", url: "https://linkedin.com/company/keingraphics", handle: "Kein Graphics" },
+    { name: "X (Twitter)", url: "https://x.com/keingraphics", handle: "@keingraphics" },
+    { name: "Facebook", url: "https://facebook.com/keingraphics", handle: "Kein Graphics" },
   ],
 };
 

@@ -128,7 +128,7 @@ export const Contact: React.FC<ContactProps> = ({
     setSubmitResult({ status: 'idle', message: '' });
 
     try {
-      // Direct delivery to Formspree endpoint: https://formspree.io/f/mjyyaqjw
+      // Direct delivery to Formspree endpoint: https://formspree.io/f/xvkkwewd
       const response = await fetch(BRAND_CONFIG.formspreeEndpoint, {
         method: 'POST',
         headers: {

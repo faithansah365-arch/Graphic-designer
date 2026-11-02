@@ -52,7 +52,7 @@ app.post('/api/contact', async (req, res) => {
     const mailtoBody = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nService: ${service}\nBudget: ${budgetRange}\nPreferred Contact: ${preferredMethod}\n\nMessage:\n${message}`;
     const mailtoUrl = `mailto:${recipientEmail}?subject=${encodeURIComponent(mailtoSubject)}&body=${encodeURIComponent(mailtoBody)}`;
 
-    const formspreeEndpoint = process.env.FORMSPREE_ENDPOINT || 'https://formspree.io/f/mjyyaqjw';
+    const formspreeEndpoint = process.env.FORMSPREE_ENDPOINT || 'https://formspree.io/f/xvkkwewd';
 
     // If RESEND_API_KEY is not configured, dispatch to the configured Formspree endpoint
     if (!resendApiKey || !resendApiKey.trim() || resendApiKey === 'MY_RESEND_API_KEY') {
@@ -101,7 +101,7 @@ app.post('/api/contact', async (req, res) => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden;">
         <div style="background-color: #080B63; color: #ffffff; padding: 24px; text-align: center;">
           <h1 style="margin: 0; font-size: 22px; font-weight: bold; letter-spacing: 0.5px;">New Client Design Enquiry</h1>
-          <p style="margin: 8px 0 0; color: #cbd5e1; font-size: 14px;">Graphic Designer Portfolio & Business Services</p>
+          <p style="margin: 8px 0 0; color: #cbd5e1; font-size: 14px;">Kein Graphics – Creative Design & Branding Studio</p>
         </div>
         <div style="padding: 24px; background-color: #ffffff;">
           <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">

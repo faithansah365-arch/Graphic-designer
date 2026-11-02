@@ -9,6 +9,7 @@ import {
   Facebook,
   Twitter,
   Globe,
+  ExternalLink,
 } from 'lucide-react';
 import { BRAND_CONFIG, getWhatsAppUrl } from '../config/brandConfig.ts';
 import { SERVICES_LIST } from '../data/servicesData.ts';
@@ -121,6 +122,17 @@ export const Footer: React.FC<FooterProps> = ({ onSelectService }) => {
               <li>
                 <a href="#portfolio" className="hover:text-white hover:underline transition-colors">
                   Portfolio & Showcases
+                </a>
+              </li>
+              <li>
+                <a
+                  href={BRAND_CONFIG.portfolioDriveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-amber-300 transition-colors flex items-center gap-1.5 text-blue-200 font-medium"
+                >
+                  <span>Drive Portfolio Archive</span>
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               </li>
               <li>
